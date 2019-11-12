@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace IntegrateTechnicalTest.Controllers
 {
 
-    [Authorize]
+    //[Authorize]
     public class Base : ControllerBase
     {
     }
