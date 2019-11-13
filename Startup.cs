@@ -13,6 +13,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using IntegrateTechnicalTest.Data;
+using IntegrateTechnicalTest.Repository;
+using IntegrateTechnicalTest.Model;
+using IntegrateTechnicalTest.Services;
 
 namespace IntegrateTechnicalTest
 {
@@ -32,6 +37,11 @@ namespace IntegrateTechnicalTest
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
             services.AddControllers();
             services.AddMvc().AddFluentValidation();
+
+            services.AddDbContext<IntegrateTechnicalTestContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("IntegrateTechnicalTestContext")));
+            services.AddTransient<ILeadClassService,LeadClassService>();
+            services.AddTransient<IRepo<LeadClass>, LeadClassRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
